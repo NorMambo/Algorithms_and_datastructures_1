@@ -1,6 +1,8 @@
 package Problem2;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 /**
  * Weighted Quick Union Find
@@ -14,9 +16,15 @@ public class WQUF {
      * @param elements The number of elements (and size of the array).
      */
     public WQUF(int elements){
-        this.roots = new int[elements];
-        this.sizes = new int[elements];
-        Arrays.fill(sizes, 1);
+        this.roots = IntStream.range(0, elements).toArray();
+        this.sizes = IntStream.generate(() -> 1).limit(elements).toArray();
+    }
+
+    public void printInfo() {
+        System.out.println("ARRAY:");
+        System.out.println(Arrays.toString(this.roots));
+        System.out.println("SIZES:");
+        System.out.println(Arrays.toString(this.sizes));
     }
 
     /**
@@ -24,7 +32,7 @@ public class WQUF {
      * @param a An integer (and an index of the array).
      * @return An integer (and an index of the array).
      */
-    public int root(int a) {
+    public int findRoot(int a) {
         while (a != roots[a])
             a = roots[a];
         return a;
@@ -37,14 +45,14 @@ public class WQUF {
      * @param b An integer (and an index of the array).
      */
     public void union(int a, int b) {
-        int rootA = root(a);
-        int rootB = root(b);
+        int rootA = findRoot(a);
+        int rootB = findRoot(b);
         if (sizes[rootA] < sizes[rootB]) {
             roots[rootA] = rootB;
-            sizes[rootA] += sizes[rootB];
+            sizes[rootB] += sizes[rootA];
         } else {
             roots[rootB] = rootA;
-            sizes[rootB] += sizes[rootA];
+            sizes[rootA] += sizes[rootB];
         }
 
     }
@@ -56,6 +64,55 @@ public class WQUF {
      * @return True or False.
      */
     public boolean connected(int a, int b) {
-        return root(a) == root(b);
+        return findRoot(a) == findRoot(b);
+    }
+
+    /**
+     * Path compression. Does the same as the 'findRoot' method,
+     * but also compresses the paths to root of indirect searched children.
+     */
+    public int collapsingFindRoot(int a){
+        int root = a;
+        while (root != roots[root]){ // find the root iteratively
+            root = roots[root];
+        }
+
+        while (roots[a] != root){
+            int next = roots[a]; // save next member before reassigning the root
+            roots[a] = root; // assign original root to member
+            a = next; // take next member in line & repeat operation until original root is found
+        }
+        return root;
+    }
+
+
+    public static void main(String[] args) {
+
+        WQUF wquf = new WQUF(15);
+        wquf.printInfo();
+        wquf.union(0, 1);
+        wquf.union(1, 2);
+
+        wquf.union(3, 4);
+        wquf.union(4, 5);
+        wquf.union(5, 6);
+
+        wquf.union(7, 8);
+        wquf.union(8, 9);
+        wquf.union(9, 10);
+        wquf.union(10, 11);
+        wquf.union(11, 12);
+        wquf.union(12, 13);
+        wquf.union(13, 14);
+
+        wquf.union(0, 3);
+        wquf.union(5, 11);
+
+        wquf.printInfo();
+
+        System.out.println("PERFORM COLLAPSING FIND ROOT:");
+        wquf.collapsingFindRoot(2);
+        wquf.printInfo();
+
     }
 }

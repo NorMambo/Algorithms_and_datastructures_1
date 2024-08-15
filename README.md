@@ -8,17 +8,19 @@
 --------------------------------------------------------
 ## PROBLEM 1 - QUICK FIND)
 
-#### 1) Run main to see the algorithm perform tasks.
+#### 1) Naive Union Find (union is always O(n))
 
 --------------------------------------------------------
 ## PROBLEM 2 - QUICK UNION)
 
-#### 1) Run main to see the algorithm perform tasks.
+#### 1) Quick Union Find
+#### 2) Weighted Quick Union Find (adds set to largest set, instead of randomly)
+#### 2.2) added method: collapsingFindRoot() -> performs path compression
 
 --------------------------------------------------------
 ## PROBLEM 3 - TIMER)
 
-#### 1) No need to run anything.
+#### 1) Function used to time other functions.
 
 --------------------------------------------------------
 ## PROBLEM 4 - TEST QUICK FIND AND QUICK UNION)
@@ -74,11 +76,11 @@
 --------------------------------------------------------
 ## HelperClasses class)
 
-#### 4) The class Tuple3 (only used in 3sum) is just a class that holds 3 integers. For the sake of simplicity, the attributes (int a, int b, int c) are public.
+#### 1) The class Tuple3 (only used in 3sum) is just a class that holds 3 integers. For the sake of simplicity, the attributes (int a, int b, int c) are public.
 
-#### 5) The class InfoList is just a class that holds 3 Arraylists.
+#### 2) The class InfoList is just a class that holds 3 Arraylists.
 
-#### 6) The ReaderWriter class is a class that I created to simplify reading and writing to files.
+#### 3) The ReaderWriter class is a class that I created to simplify reading and writing to files.
 #### Among other functions, it reads from .csv files and generates InfoLists (see pt.5) that contain ArrayLists of ID's, sizes, and measured times.
 
-#### 7) The Formulas class only contains mathematica formulas used by other classes to find values.
+#### 4) The Formulas class only contains mathematica formulas used by other classes to find values.
